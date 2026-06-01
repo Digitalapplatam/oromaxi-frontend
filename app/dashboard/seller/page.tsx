@@ -9,7 +9,7 @@ import { usersAPI } from '@/lib/api';
 export default function SellerDashboard() {
   const router = useRouter();
   const { isAuthenticated, user, logout, login } = useAuthStore();
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [upgradingRole, setUpgradingRole] = useState(false);
 
