@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/authStore';
-import { itemsAPI, usersAPI } from '@/lib/api';
+import { usersAPI } from '@/lib/api';
 
 export default function SellerDashboard() {
   const router = useRouter();
