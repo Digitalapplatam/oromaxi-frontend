@@ -134,15 +134,14 @@ export default function MarketplacePage() {
               >
                 {/* Imagen */}
                 <div className="h-48 bg-dark-bg flex items-center justify-center">
-                  {item.images?.[0] ? (
-                    <img
-                      src={item.images[0]}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-4xl">💍</span>
-                  )}
+                  {(() => {
+                    const img = Array.isArray(item.images) ? item.images[0] : (item.images || '').split(',')[0];
+                    return img ? (
+                      <img src={img} alt={item.title} className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-4xl">💍</span>
+                    );
+                  })()}
                 </div>
 
                 {/* Info */}

@@ -112,15 +112,14 @@ export default function ItemDetailPage() {
           {/* Imágenes */}
           <div>
             <div className="bg-gray-dark rounded-xl h-80 flex items-center justify-center overflow-hidden">
-              {item.images && item.images.split(',')[0] ? (
-                <img
-                  src={item.images.split(',')[0]}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <span className="text-8xl">💍</span>
-              )}
+              {(() => {
+                const img = Array.isArray(item.images) ? item.images[0] : (item.images || '').split(',')[0];
+                return img ? (
+                  <img src={img} alt={item.title} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-8xl">💍</span>
+                );
+              })()}
             </div>
           </div>
 
