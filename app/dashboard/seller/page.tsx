@@ -100,7 +100,7 @@ export default function SellerDashboard() {
           </Link>
           <div className="flex gap-4 items-center">
             <ThemeToggle />
-            <span className="text-gray-light text-sm">{user?.firstName} {user?.lastName}</span>
+            <Link href="/perfil" className="text-gray-light hover:text-gold text-sm">{user?.firstName} {user?.lastName}</Link>
             <button onClick={handleLogout}
               className="px-4 py-2 border border-gray-dark text-gray-light rounded-lg hover:border-gold hover:text-gold text-sm transition">
               Cerrar sesión
