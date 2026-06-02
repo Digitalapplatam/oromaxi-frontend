@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/authStore';
 import { itemsAPI, offersAPI } from '@/lib/api';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function ItemDetailPage() {
   const { id } = useParams();
@@ -64,6 +65,13 @@ export default function ItemDetailPage() {
     auction: 'Subasta',
   };
 
+  const CONDITION_LABEL: Record<string, string> = {
+    excellent: 'Excelente',
+    very_good: 'Muy bueno',
+    good: 'Bueno',
+    fair: 'Regular',
+  };
+
   if (loading) return (
     <div className="min-h-screen bg-dark-bg flex items-center justify-center text-gray-light">
       Cargando...
@@ -89,9 +97,12 @@ export default function ItemDetailPage() {
           <Link href="/" className="text-2xl font-bold">
             <span className="text-gold">ORO</span><span className="text-white">MAXI</span>
           </Link>
-          <Link href="/marketplace" className="text-gray-light hover:text-gold text-sm">
-            ← Catálogo
-          </Link>
+          <div className="flex gap-3 items-center">
+            <ThemeToggle />
+            <Link href="/marketplace" className="text-gray-light hover:text-gold text-sm">
+              ← Catálogo
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -132,7 +143,7 @@ export default function ItemDetailPage() {
                 { label: 'Material', value: item.material },
                 { label: 'Pureza', value: item.purity || '—' },
                 { label: 'Peso', value: item.weight ? `${item.weight}g` : '—' },
-                { label: 'Estado', value: item.condition },
+                { label: 'Estado', value: CONDITION_LABEL[item.condition] || item.condition },
                 { label: 'Ciudad', value: item.city },
                 { label: 'Marca', value: item.brand || '—' },
               ].map((d) => (

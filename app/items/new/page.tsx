@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/authStore';
 import { itemsAPI } from '@/lib/api';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const CATEGORIES = ['ORO', 'JOYERIA', 'RELOJERIA'];
 const CONDITIONS = ['excellent', 'very_good', 'good', 'fair'];
@@ -14,7 +15,8 @@ const CONDITION_LABELS: Record<string, string> = {
   good: 'Bueno',
   fair: 'Regular',
 };
-const MATERIALS = ['Oro', 'Plata', 'Platino', 'Oro blanco', 'Oro rosado'];
+const MATERIALS = ['Oro', 'Plata', 'Platino'];
+
 const PURITIES = ['10K', '14K', '18K', '20K', '22K', '24K'];
 const CITIES = ['Quito', 'Guayaquil', 'Cuenca', 'Machala'];
 const SALE_TYPES = [
@@ -100,7 +102,7 @@ export default function NewItemPage() {
         minAcceptable: form.minAcceptable ? parseFloat(form.minAcceptable) : undefined,
         saleType: form.saleType,
         city: form.city,
-        images: form.images,
+        images: form.images.length > 0 ? form.images : undefined,
       };
       const res = await itemsAPI.create(payload);
       const itemId = res.data?.item?.id || res.data?.id;
@@ -131,9 +133,12 @@ export default function NewItemPage() {
           <Link href="/" className="text-2xl font-bold">
             <span className="text-gold">ORO</span><span className="text-white">MAXI</span>
           </Link>
-          <Link href="/dashboard/seller" className="text-gray-light hover:text-gold text-sm">
-            ← Mi dashboard
-          </Link>
+          <div className="flex gap-3 items-center">
+            <ThemeToggle />
+            <Link href="/dashboard/seller" className="text-gray-light hover:text-gold text-sm">
+              ← Mi dashboard
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -190,6 +195,13 @@ export default function NewItemPage() {
                   {CONDITIONS.map((c) => <option key={c} value={c}>{CONDITION_LABELS[c]}</option>)}
                 </select>
               </div>
+            </div>
+
+            <div>
+              <label className="block text-sm text-gray-light mb-1">Marca (opcional)</label>
+              <input value={form.brand} onChange={(e) => set('brand', e.target.value)}
+                className="w-full bg-dark-bg border border-gray-dark rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold"
+                placeholder="Ej: Cartier, Rolex, Tiffany..." />
             </div>
 
             <div className="grid grid-cols-3 gap-4">

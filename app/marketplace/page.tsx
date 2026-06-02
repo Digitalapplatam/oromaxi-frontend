@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuthStore } from '@/lib/authStore';
 import { itemsAPI } from '@/lib/api';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const CATEGORIES = ['Todos', 'ORO', 'JOYERIA', 'RELOJERIA'];
 
@@ -46,6 +47,7 @@ export default function MarketplacePage() {
             <span className="text-white">MAXI</span>
           </Link>
           <div className="flex gap-4 items-center">
+            <ThemeToggle />
             {isAuthenticated ? (
               <>
                 <span className="text-gray-light text-sm">Hola, {user?.firstName}</span>

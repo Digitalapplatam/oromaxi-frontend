@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/authStore';
 import { usersAPI } from '@/lib/api';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function SellerDashboard() {
   const router = useRouter();
@@ -73,6 +74,7 @@ export default function SellerDashboard() {
             <span className="text-white">MAXI</span>
           </Link>
           <div className="flex gap-4 items-center">
+            <ThemeToggle />
             <span className="text-gray-light text-sm">
               {user?.firstName} {user?.lastName}
             </span>
