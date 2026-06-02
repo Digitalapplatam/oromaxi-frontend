@@ -89,6 +89,7 @@ export default function NewItemPage() {
         weight: parseFloat(form.weight) || 0,
         expectedPrice: parseFloat(form.expectedPrice) || 0,
         minAcceptable: parseFloat(form.minAcceptable) || 0,
+        images: form.images.join(','),
         userId: user?.id,
       };
       const res = await itemsAPI.create(payload);
