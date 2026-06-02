@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useAuthStore } from '@/lib/authStore';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Home() {
   const { isAuthenticated, user } = useAuthStore();
@@ -16,7 +17,8 @@ export default function Home() {
             <span className="text-white">MAXI</span>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
+            <ThemeToggle />
             {isAuthenticated ? (
               <>
                 <span className="text-gray-light">Hola, {user?.firstName}</span>

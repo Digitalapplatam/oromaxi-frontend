@@ -24,3 +24,50 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Modo claro */
+[data-theme='light'] {
+  --bg: #F5F5F0;
+  --text: #1A1A1A;
+  --card: #FFFFFF;
+  --border: #E0E0E0;
+}
+
+[data-theme='light'] body {
+  background-color: #F5F5F0;
+  color: #1A1A1A;
+}
+
+[data-theme='light'] .bg-dark-bg {
+  background-color: #F5F5F0 !important;
+}
+
+[data-theme='light'] .bg-gray-dark {
+  background-color: #FFFFFF !important;
+  border-color: #E0E0E0 !important;
+}
+
+[data-theme='light'] .text-white {
+  color: #1A1A1A !important;
+}
+
+[data-theme='light'] .text-gray-light {
+  color: #555555 !important;
+}
+
+[data-theme='light'] .border-gray-dark {
+  border-color: #E0E0E0 !important;
+}
+
+[data-theme='light'] input,
+[data-theme='light'] select,
+[data-theme='light'] textarea {
+  background-color: #F9F9F9 !important;
+  color: #1A1A1A !important;
+  border-color: #D0D0D0 !important;
+}
+
+[data-theme='light'] nav {
+  background-color: #FFFFFF !important;
+  border-color: #E0E0E0 !important;
+}
