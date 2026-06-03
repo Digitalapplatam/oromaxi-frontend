@@ -213,7 +213,9 @@ export default function MarketplacePage() {
                       <p className="text-gray-light text-xs mb-1">{item.material} {item.purity} · {item.city}</p>
                       <p className="text-gray-light text-sm line-clamp-2 mb-3">{item.description}</p>
                       <div className="flex justify-between items-center">
-                        <span className="text-gold font-bold text-lg">${Number(item.expectedPrice || 0).toLocaleString()}</span>
+                        <span className="text-gold font-bold text-lg">
+                          {item.expectedPrice > 0 ? `$${Number(item.expectedPrice).toLocaleString()}` : 'Consultar'}
+                        </span>
                         <span className="text-xs text-gray-light">{item.offers?.length || 0} oferta{item.offers?.length !== 1 ? 's' : ''}</span>
                       </div>
                     </div>

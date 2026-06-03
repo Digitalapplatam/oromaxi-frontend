@@ -53,10 +53,10 @@ export default function Home() {
 
       {/* HERO */}
       <section className="max-w-7xl mx-auto px-6 py-24 text-center">
-        <h1 className="text-6xl font-bold mb-6">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6">
           <span className="text-gold">Invierte</span> Responsablemente
         </h1>
-        <p className="text-2xl text-gray-light mb-12">
+        <p className="text-lg md:text-2xl text-gray-light mb-12 px-4">
           Marketplace de confianza para oro, relojería y joyas de valor
         </p>
 
