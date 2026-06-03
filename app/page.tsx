@@ -18,6 +18,8 @@ export default function Home() {
           </div>
 
           <div className="flex gap-4 items-center">
+            <Link href="/como-funciona" className="text-gray-light hover:text-gold text-sm hidden md:block">Cómo funciona</Link>
+            <Link href="/marketplace" className="text-gray-light hover:text-gold text-sm hidden md:block">Catálogo</Link>
             <ThemeToggle />
             {isAuthenticated ? (
               <>
@@ -104,9 +106,43 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-gray-dark py-8">
-        <div className="max-w-7xl mx-auto px-6 text-center text-gray-light">
-          <p>© 2024 OROMAXI. Todos los derechos reservados.</p>
+      <footer className="border-t border-gray-dark py-12 bg-dark-bg">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="text-2xl font-bold mb-3">
+                <span className="text-gold">ORO</span><span className="text-white">MAXI</span>
+              </div>
+              <p className="text-gray-light text-sm">Marketplace de confianza para oro, relojería y joyas en Ecuador.</p>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-3">Plataforma</h4>
+              <div className="space-y-2">
+                <Link href="/marketplace" className="block text-gray-light hover:text-gold text-sm transition">Catálogo</Link>
+                <Link href="/como-funciona" className="block text-gray-light hover:text-gold text-sm transition">Cómo funciona</Link>
+                <Link href="/items/new" className="block text-gray-light hover:text-gold text-sm transition">Publicar artículo</Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-3">Cuenta</h4>
+              <div className="space-y-2">
+                <Link href="/signup" className="block text-gray-light hover:text-gold text-sm transition">Registrarse</Link>
+                <Link href="/login" className="block text-gray-light hover:text-gold text-sm transition">Iniciar sesión</Link>
+                <Link href="/dashboard/seller" className="block text-gray-light hover:text-gold text-sm transition">Mi dashboard</Link>
+              </div>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-3">Ciudades</h4>
+              <div className="space-y-2">
+                {['Quito', 'Guayaquil', 'Cuenca', 'Machala'].map(c => (
+                  <span key={c} className="block text-gray-light text-sm">{c}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="border-t border-gray-dark pt-6 text-center text-gray-light text-sm">
+            <p>© 2024 OROMAXI. Todos los derechos reservados. · Ecuador</p>
+          </div>
         </div>
       </footer>
     </div>
