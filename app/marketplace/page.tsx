@@ -27,7 +27,9 @@ export default function MarketplacePage() {
 
   useEffect(() => {
     fetchItems();
-  }, [category, city, saleType]);
+  }, [category, city, saleType, isAuthenticated]);
+
+  const isJoyeria = user?.role === 'jewelry' || user?.role === 'admin';
 
   const fetchItems = async () => {
     setLoading(true);
@@ -39,7 +41,12 @@ export default function MarketplacePage() {
       if (minPrice) params.minPrice = minPrice;
       if (maxPrice) params.maxPrice = maxPrice;
       const res = await itemsAPI.getAll(params);
-      setItems(res.data.items || res.data || []);
+      let all = res.data.items || res.data || [];
+      // Clientes solo ven venta directa y subastas
+      if (!isJoyeria) {
+        all = all.filter((i: any) => i.saleType === 'definitive' || i.saleType === 'auction');
+      }
+      setItems(all);
     } catch {
       setItems([]);
     } finally {
@@ -103,6 +110,14 @@ export default function MarketplacePage() {
             </Link>
           )}
         </div>
+
+        {/* Banner joyerías */}
+        {!isAuthenticated && (
+          <div className="mb-6 bg-gold/10 border border-gold/30 rounded-xl p-4 flex justify-between items-center">
+            <p className="text-gray-light text-sm">¿Eres joyería? Accede a más artículos incluyendo recompras.</p>
+            <Link href="/signup" className="text-gold font-semibold text-sm hover:underline shrink-0 ml-4">Registrar joyería →</Link>
+          </div>
+        )}
 
         {/* Búsqueda y filtros */}
         <div className="space-y-3 mb-6">

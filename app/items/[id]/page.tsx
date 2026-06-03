@@ -46,8 +46,6 @@ export default function ItemDetailPage() {
         itemId: id,
         amount: parseFloat(offerAmount),
         message: offerMessage,
-        receiverId: item.userId,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
       });
       setOfferSuccess(true);
       setOfferAmount('');
@@ -170,7 +168,22 @@ export default function ItemDetailPage() {
             {!isOwner && (
               <div className="bg-gray-dark rounded-xl p-5">
                 <h3 className="text-white font-semibold mb-4">Hacer una oferta</h3>
-                {offerSuccess ? (
+                {!isAuthenticated ? (
+                  <div className="text-center">
+                    <p className="text-gray-light text-sm mb-3">Debes iniciar sesión para hacer una oferta</p>
+                    <Link href="/login" className="px-6 py-2 bg-gold text-dark-bg font-bold rounded-lg hover:bg-yellow-500 text-sm">
+                      Iniciar sesión
+                    </Link>
+                  </div>
+                ) : user?.role !== 'jewelry' && user?.role !== 'admin' ? (
+                  <div className="bg-gold/10 border border-gold/30 rounded-lg p-4 text-center">
+                    <p className="text-gold font-semibold text-sm mb-1">Solo joyerías pueden hacer ofertas</p>
+                    <p className="text-gray-light text-xs">Las ofertas en OROMAXI son realizadas por joyerías verificadas.</p>
+                    <Link href="/signup" className="block mt-3 text-gold hover:underline text-sm">
+                      Registrar mi joyería →
+                    </Link>
+                  </div>
+                ) : offerSuccess ? (
                   <div className="bg-green-900/30 border border-green-500 text-green-400 px-4 py-3 rounded-lg">
                     ✅ Oferta enviada. El vendedor la revisará pronto.
                   </div>
@@ -178,35 +191,21 @@ export default function ItemDetailPage() {
                   <form onSubmit={handleOffer} className="space-y-3">
                     <div>
                       <label className="block text-sm text-gray-light mb-1">Tu oferta ($)</label>
-                      <input
-                        type="number"
-                        required
-                        step="0.01"
-                        value={offerAmount}
+                      <input type="number" required step="0.01" value={offerAmount}
                         onChange={(e) => setOfferAmount(e.target.value)}
                         className="w-full bg-dark-bg border border-gray-dark rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold"
-                        placeholder="0.00"
-                      />
+                        placeholder="0.00" />
                     </div>
                     <div>
                       <label className="block text-sm text-gray-light mb-1">Mensaje (opcional)</label>
-                      <textarea
-                        value={offerMessage}
-                        onChange={(e) => setOfferMessage(e.target.value)}
-                        rows={2}
-                        className="w-full bg-dark-bg border border-gray-dark rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold resize-none"
-                        placeholder="Explica tu oferta..."
-                      />
+                      <textarea value={offerMessage} onChange={(e) => setOfferMessage(e.target.value)}
+                        rows={2} className="w-full bg-dark-bg border border-gray-dark rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold resize-none"
+                        placeholder="Explica tu oferta..." />
                     </div>
-                    {error && (
-                      <p className="text-red-400 text-sm">{error}</p>
-                    )}
-                    <button
-                      type="submit"
-                      disabled={offerLoading}
-                      className="w-full bg-gold text-dark-bg font-bold py-3 rounded-lg hover:bg-yellow-500 transition disabled:opacity-50"
-                    >
-                      {offerLoading ? 'Enviando...' : isAuthenticated ? 'Enviar oferta' : 'Inicia sesión para ofertar'}
+                    {error && <p className="text-red-400 text-sm">{error}</p>}
+                    <button type="submit" disabled={offerLoading}
+                      className="w-full bg-gold text-dark-bg font-bold py-3 rounded-lg hover:bg-yellow-500 transition disabled:opacity-50">
+                      {offerLoading ? 'Enviando...' : 'Enviar oferta'}
                     </button>
                   </form>
                 )}
