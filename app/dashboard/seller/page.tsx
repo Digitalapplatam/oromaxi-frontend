@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/authStore';
 import { usersAPI, offersAPI } from '@/lib/api';
 import ThemeToggle from '@/components/ThemeToggle';
+import AccountStatusBanner from '@/components/AccountStatusBanner';
 
 export default function SellerDashboard() {
   const router = useRouter();
@@ -121,6 +122,9 @@ export default function SellerDashboard() {
             + Publicar artículo
           </Link>
         </div>
+
+        {/* Banner verificación cuenta */}
+        <div className="mb-4"><AccountStatusBanner /></div>
 
         {/* Banner activar vendedor */}
         {user?.role === 'BUYER' && (

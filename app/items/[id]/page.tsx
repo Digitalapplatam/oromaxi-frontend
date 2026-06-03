@@ -6,6 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/lib/authStore';
 import { itemsAPI, offersAPI } from '@/lib/api';
 import ThemeToggle from '@/components/ThemeToggle';
+import UAFECAlert from '@/components/UAFECAlert';
 
 export default function ItemDetailPage() {
   const { id } = useParams();
@@ -18,6 +19,7 @@ export default function ItemDetailPage() {
   const [offerLoading, setOfferLoading] = useState(false);
   const [offerSuccess, setOfferSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [showUAFEC, setShowUAFEC] = useState(false);
 
   useEffect(() => {
     fetchItem();
@@ -34,12 +36,7 @@ export default function ItemDetailPage() {
     }
   };
 
-  const handleOffer = async (e: any) => {
-    e.preventDefault();
-    if (!isAuthenticated) {
-      router.push('/login');
-      return;
-    }
+  const submitOffer = async () => {
     setOfferLoading(true);
     try {
       await offersAPI.create({
@@ -55,6 +52,23 @@ export default function ItemDetailPage() {
     } finally {
       setOfferLoading(false);
     }
+  };
+
+  const handleOffer = async (e: any) => {
+    e.preventDefault();
+    if (!isAuthenticated) { router.push('/login'); return; }
+    // Verificar cuenta aprobada
+    if (!user?.isVerified) {
+      setError('Tu cuenta debe estar verificada para hacer ofertas. Nuestro equipo revisará tu documentación en 24h.');
+      return;
+    }
+    // UAFEC para transacciones > $3000
+    const amount = parseFloat(offerAmount);
+    if (amount >= 3000) {
+      setShowUAFEC(true);
+      return;
+    }
+    await submitOffer();
   };
 
   const SALE_TYPE_LABEL: Record<string, string> = {
@@ -220,6 +234,13 @@ export default function ItemDetailPage() {
           </div>
         </div>
       </div>
+      {showUAFEC && (
+        <UAFECAlert
+          amount={parseFloat(offerAmount)}
+          onConfirm={() => { setShowUAFEC(false); submitOffer(); }}
+          onCancel={() => setShowUAFEC(false)}
+        />
+      )}
     </div>
   );
 }
